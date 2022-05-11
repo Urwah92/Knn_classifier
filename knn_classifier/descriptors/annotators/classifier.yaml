@@ -1,0 +1,10 @@
+annotator:
+  implementation: rs_classifier
+  name: classifier
+parameters:
+  test_param: 0.01
+capabilities:
+  inputs: {sensor_msgs/Image rgb, std_msgs/String description}
+  outputs: {bool success,
+int32[] class_ids,
+float32[] class_confidence}
