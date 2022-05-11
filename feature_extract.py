@@ -3,11 +3,13 @@ from keras.applications.mobilenet import MobileNet
 from keras.models import Model
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
+import rospkg
 import os
 
 
 def set_dataset_dir(label_base_dir, label_dir):
-    """This function is used to delete all text files and non-RGB files from the dataset directory."""
+    """This function is used to delete all text files and non-RGB files from the dataset directory
+    (used for partial_views dataset)."""
     labels = []
     total = []
     for i in label_base_dir:
@@ -70,13 +72,15 @@ def add_labels_with_features(features):
 
 
 #Dataset path
-label_dir = "/home/rs2004/knn_ws/src/knn_classifier/data/partial_views"
+rospack = rospkg.RosPack()
+package_path = rospack.get_path('knn_classifier')
+label_dir = package_path + "/data/partial_views"
 label_base_dir = os.listdir(label_dir)
 
 #Saved file path
-save_file_path= "/home/rs2004/knn_ws/src/knn_classifier/scripts/features.npy"
+save_file_path= package_path + "/scripts/features.npy"
 
-set_dataset_dir(label_base_dir,label_dir)
+set_dataset_dir(label_base_dir, label_dir)
 
 model = get_model()
 train = train_datagenerator()
